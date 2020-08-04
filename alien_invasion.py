@@ -43,15 +43,9 @@ class AlienInvasion:
             self._check_events()
             # Ship's position is updated after we've checked for keyboard events and before we update the screen.
             self.ship.update()
-            # Update each of the position of the bullets, using sprite
-            self.bullets.update()
-
-            # Get rid of bullets that have disappeared.
-            for bullet in self.bullets.copy():
-                if bullet.rect.bottom <= 0:
-                    self.bullets.remove(bullet)
-            # print(len(self.bullets))
-
+            # Update bullets
+            self._update_bullets()
+            # Update the whole pygame screen
             self.__update_screen()
 
 
@@ -100,8 +94,24 @@ class AlienInvasion:
         """
         Create a new bullet and add it to the bullets group.
         """
-        new_bullet = Bullet(self)
-        self.bullets.add(new_bullet)
+        # Limite player to bullets_allowed number of bullets at a time.
+        if len(self.bullets) < self.settings.bullets_allowed:
+            new_bullet = Bullet(self)
+            self.bullets.add(new_bullet)
+
+
+    def _update_bullets(self):
+        """
+        Update position of bullets and get rid of old bullets.
+        """
+        # Update each of the position of the bullets, using sprite
+        self.bullets.update()
+
+        # Get rid of bullets that have disappeared.
+        for bullet in self.bullets.copy():
+            if bullet.rect.bottom <= 0:
+                self.bullets.remove(bullet)
+        # print(len(self.bullets))
 
     
     def __update_screen(self):
