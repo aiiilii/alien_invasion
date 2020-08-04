@@ -4,6 +4,7 @@ import pygame
 
 from settings import Settings
 from ship import Ship
+from bullet import Bullet
 
 class AlienInvasion:
     """
@@ -29,6 +30,9 @@ class AlienInvasion:
 
         self.ship = Ship(self)
 
+        # Storing bullets in a group
+        self.bullets = pygame.sprite.Group()
+
 
     def run_game(self):
         """
@@ -39,6 +43,15 @@ class AlienInvasion:
             self._check_events()
             # Ship's position is updated after we've checked for keyboard events and before we update the screen.
             self.ship.update()
+            # Update each of the position of the bullets, using sprite
+            self.bullets.update()
+
+            # Get rid of bullets that have disappeared.
+            for bullet in self.bullets.copy():
+                if bullet.rect.bottom <= 0:
+                    self.bullets.remove(bullet)
+            # print(len(self.bullets))
+
             self.__update_screen()
 
 
@@ -68,6 +81,8 @@ class AlienInvasion:
             self.ship.moving_left = True
         elif event.key == pygame.K_q:
             sys.exit()
+        elif event.key == pygame.K_SPACE:
+            self._fire_bullet()
 
 
     def _check_keyup_event(self, event):
@@ -80,6 +95,14 @@ class AlienInvasion:
         elif event.key == pygame.K_LEFT:
             self.ship.moving_left = False
 
+
+    def _fire_bullet(self):
+        """
+        Create a new bullet and add it to the bullets group.
+        """
+        new_bullet = Bullet(self)
+        self.bullets.add(new_bullet)
+
     
     def __update_screen(self):
         """
@@ -89,6 +112,9 @@ class AlienInvasion:
         self.screen.fill(self.settings.bg_color)
 
         self.ship.blitme()
+
+        for bullet in self.bullets.sprites():
+            bullet.draw_bullet()
 
         # Make the most recently drawn screen visible
         # Continuously updates the display to show the new positions of game elements
