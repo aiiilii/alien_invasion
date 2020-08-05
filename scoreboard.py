@@ -26,7 +26,9 @@ class Scoreboard:
         """
         Turn the score into a rendered image.
         """
-        score_str = str(self.stats.score)
+        # -1 decimal place is round to multiples of 10
+        rounded_score = round(self.stats.score, -1)
+        score_str = "{:,}".format(rounded_score)
         self.score_image = self.font.render(score_str, True, self.text_color, self.settings.bg_color)
 
         # Display the score at the top right of the screen.
