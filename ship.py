@@ -1,6 +1,7 @@
 import pygame
+from pygame.sprite import Sprite
 
-class Ship:
+class Ship(Sprite):
     """
     A class to manage the ship.
     """
@@ -10,6 +11,7 @@ class Ship:
         Initialize the ship and set its starting position.
         :type ai_game: AlienInvasion
         """
+        super().__init__()
         # Get the screen from AlienInvasion instance
         self.screen = ai_game.screen
         # Access the screen's rect attribute using get_rect()
