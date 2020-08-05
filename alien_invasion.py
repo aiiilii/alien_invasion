@@ -107,7 +107,11 @@ class AlienInvasion:
 
             # Create a new fleet and center the ship.
             self._create_fleet()
-            self.ship.center_ship()        
+            self.ship.center_ship()
+
+            # Hide the mouse cursor.
+            pygame.mouse.set_visible(False)
+    
         elif event.key == pygame.K_SPACE:
             self._fire_bullet()
 
@@ -139,6 +143,9 @@ class AlienInvasion:
             # Create a new fleet and center the ship.
             self._create_fleet()
             self.ship.center_ship()
+
+            # Hide the mouse cursor.
+            pygame.mouse.set_visible(False)
 
 
     def _fire_bullet(self):
@@ -215,8 +222,9 @@ class AlienInvasion:
 
             # Pause.
             sleep(0.5)
-        else :
+        else:
             self.stats.game_active = False
+            pygame.mouse.set_visible(True)
 
 
     def _check_aliens_bottom(self):
