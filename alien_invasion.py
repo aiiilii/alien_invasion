@@ -139,6 +139,9 @@ class AlienInvasion:
         self._create_fleet()
         self.ship.center_ship()
 
+        self.sb.prep_score()
+        self.sb.prep_level()
+
         # Hide the mouse cursor.
         pygame.mouse.set_visible(False)
 
@@ -190,6 +193,10 @@ class AlienInvasion:
             self._create_fleet()
             # self.ship.center_ship()
             self.settings.increase_speed()
+
+            # Increase level.
+            self.stats.level += 1
+            self.sb.prep_level()
 
     
     def _update_aliens(self):

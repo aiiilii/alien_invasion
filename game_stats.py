@@ -23,3 +23,4 @@ class GameStats:
         self.ships_left = self.settings.ship_limit
         # Resets every new game, thus in reset_stats instead of __init__
         self.score = 0
+        self.level = 1
